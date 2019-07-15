@@ -10,6 +10,8 @@ export default class LocationList extends Component {
                     this.props.locations.map(location =>
                         <div key={location.id}>
                             {location.name}
+                            <br></br>
+                            {location.address}
                         </div>
                         )
                 }
