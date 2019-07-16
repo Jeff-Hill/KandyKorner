@@ -55,11 +55,6 @@
       "name": "Black Licorice"
     },
     {
-      "id": 3,
-      "candyTypeId": 2,
-      "name": "Snickers"
-    },
-    {
       "id": 4,
       "candyTypeId": 2,
       "name": "Peanut Butter Twix"
