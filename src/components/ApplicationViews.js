@@ -32,6 +32,19 @@ componentDidMount() {
         .then(() => this.setState(newState))
 }
 
+deleteCandy = id => {
+    return fetch(`http://localhost:5002/candies/${id}`, {
+        method: "DELETE"
+    })
+    .then(e => e.json())
+    .then(() => fetch(`http://localhost:5002/candies`))
+    .then(e => e.json())
+    .then(candies => this.setState({
+        candies: candies
+    })
+  )
+}
+
 render() {
     return (
         <React.Fragment>
@@ -39,7 +52,7 @@ render() {
                 return <LocationList locations={this.state.locations} />
             }} />
             <Route path="/candies" render={(props) => {
-                return <CandyList candies={this.state.candies} candyTypes={this.state.candyTypes} />
+                return <CandyList deleteCandy={this.deleteCandy} candies={this.state.candies} candyTypes={this.state.candyTypes} />
             }} />
             <Route path="/employees" render={(props) => {
                 return <EmployeeList employees={this.state.employees} />
