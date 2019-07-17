@@ -32,18 +32,26 @@ componentDidMount() {
         .then(() => this.setState(newState))
 }
 
-deleteCandy = id => {
-    return fetch(`http://localhost:5002/candies/${id}`, {
-        method: "DELETE"
+// deleteCandy = id => {
+//     return fetch(`http://localhost:5002/candies/${id}`, {
+//         method: "DELETE"
+//     })
+//     .then(e => e.json())
+//     .then(() => fetch(`http://localhost:5002/candies`))
+//     .then(e => e.json())
+//     .then(candies => this.setState({
+//         candies: candies
+//     })
+//   )
+// }
+
+deleteCandy = (id) => {
+    return CandyManager.removeAndList("candies", id)
+    // .then(CandyManager.getAll(resource))
+    .then(candies => { this.props.history.push("/candies")
+        this.setState({ candies : candies})
     })
-    .then(e => e.json())
-    .then(() => fetch(`http://localhost:5002/candies`))
-    .then(e => e.json())
-    .then(candies => this.setState({
-        candies: candies
-    })
-  )
-}
+  }
 
 render() {
     return (

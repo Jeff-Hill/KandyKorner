@@ -26,9 +26,6 @@ export default {
                 method: "DELETE"
                 })
         }
-
-
-
 }
 
 
