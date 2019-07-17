@@ -3,6 +3,10 @@ import React, { Component } from 'react'
 import EmployeeList from "./employee/EmployeeList"
 import LocationList from "./location/LocationList"
 import CandyList from "./candy/CandyList"
+import CandyManager from "../modules/CandyManager"
+import LocationManager from "../modules/LocationManager"
+import EmployeeManager from "../modules/EmployeeManager"
+import CandyTypeManager from "../modules/CandyTypeManager"
 // import CandyTypeList from "./candyType/CandyTypeList"
 
 export default class ApplicationViews extends Component {
@@ -17,33 +21,37 @@ state = {
 componentDidMount() {
     const newState = {}
 
-    fetch("http://localhost:5002/locations")
-        .then(r => r.json())
+    LocationManager.getAll("locations")
         .then(locations => newState.locations = locations)
-        .then(() => fetch("http://localhost:5002/employees")
-        .then(r => r.json()))
+    EmployeeManager.getAll("employees")
         .then(employees => newState.employees = employees)
-        .then(() => fetch("http://localhost:5002/candies")
-        .then(r => r.json()))
+    CandyManager.getAll("candies")
         .then(candies => newState.candies = candies)
-        .then(() => fetch("http://localhost:5002/candyTypes")
-        .then(r => r.json()))
+    CandyTypeManager.getAll("candyTypes")
         .then(candyTypes => newState.candyTypes = candyTypes)
         .then(() => this.setState(newState))
 }
 
-deleteCandy = id => {
-    return fetch(`http://localhost:5002/candies/${id}`, {
-        method: "DELETE"
+// deleteCandy = id => {
+//     return fetch(`http://localhost:5002/candies/${id}`, {
+//         method: "DELETE"
+//     })
+//     .then(e => e.json())
+//     .then(() => fetch(`http://localhost:5002/candies`))
+//     .then(e => e.json())
+//     .then(candies => this.setState({
+//         candies: candies
+//     })
+//   )
+// }
+
+deleteCandy = (id) => {
+    return CandyManager.removeAndList("candies", id)
+    // .then(CandyManager.getAll(resource))
+    .then(candies => { this.props.history.push("/candies")
+        this.setState({ candies : candies})
     })
-    .then(e => e.json())
-    .then(() => fetch(`http://localhost:5002/candies`))
-    .then(e => e.json())
-    .then(candies => this.setState({
-        candies: candies
-    })
-  )
-}
+  }
 
 render() {
     return (
