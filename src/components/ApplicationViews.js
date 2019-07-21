@@ -47,23 +47,45 @@ componentDidMount() {
 
 deleteCandy = (id) => {
     return CandyManager.removeAndList("candies", id)
-    // .then(CandyManager.getAll(resource))
-    .then(candies => { this.props.history.push("/candies")
-        this.setState({ candies : candies})
+    // .then(candies => { this.props.history.push("/candies")
+    .then(candies => {
+    this.setState({ candies : candies})
     })
   }
+
+deleteEmployee = (id) => {
+    return EmployeeManager.removeAndList("employees", id)
+      // .then(employees => { this.props.history.push("/employees")
+    .then(employees => {
+    this.setState({ employees : employees })
+    })
+}
+
+deleteLocation = (id) => {
+    return LocationManager.removeAndList("locations", id)
+    .then(locations => {
+        this.setState({ locations : locations })
+    })
+}
+
+deleteCandyType = (id) => {
+    return CandyTypeManager.removeAndList("candyTypes", id)
+    .then(candyTypes => {
+        this.setState({ candyTypes : candyTypes})
+    })
+}
 
 render() {
     return (
         <React.Fragment>
             <Route exact path="/" render={(props) => {
-                return <LocationList locations={this.state.locations} />
+                return <LocationList locations={this.state.locations} deleteLocation={this.deleteLocation} />
             }} />
             <Route path="/candies" render={(props) => {
                 return <CandyList deleteCandy={this.deleteCandy} candies={this.state.candies} candyTypes={this.state.candyTypes} />
             }} />
             <Route path="/employees" render={(props) => {
-                return <EmployeeList employees={this.state.employees} />
+                return <EmployeeList {...this.props} employees={this.state.employees} deleteEmployee={this.deleteEmployee} />
             }} />
         </React.Fragment>
         )

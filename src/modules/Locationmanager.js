@@ -16,7 +16,7 @@ export default {
 
   removeAndList(resource, id) {
         return APIManager.delete(resource, id)
-
+        .then( () => this.getAll(resource))
 
 }
 
